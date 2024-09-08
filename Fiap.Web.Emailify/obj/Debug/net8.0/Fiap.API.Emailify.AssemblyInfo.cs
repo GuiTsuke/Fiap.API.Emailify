@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Fiap.API.Emailify")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4cbe2b0a1c0407d59c90e93f6476f45e095a3116")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+150c896ae95091157f59b0ccd4e1de33ad8011b1")]
 [assembly: System.Reflection.AssemblyProductAttribute("Fiap.API.Emailify")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Fiap.API.Emailify")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -230,3 +230,4 @@ C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\refint\Fiap.API.Emai
 C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\Fiap.API.Emailify.pdb
 C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\Fiap.API.Emailify.genruntimeconfig.cache
 C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\ref\Fiap.API.Emailify.dll
+C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\Fiap.API.Emailify.sourcelink.json
