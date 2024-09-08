@@ -1,0 +1,6 @@
+@Fiap.Web.Emailify_HostAddress = http://localhost:5116
+
+GET {{Fiap.Web.Emailify_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

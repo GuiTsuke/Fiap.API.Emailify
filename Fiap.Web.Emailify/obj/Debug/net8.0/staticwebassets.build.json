@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "OKkbwdmOZGW+ot8LaOzhee8RWRTpdzbXSVEWvR2Biec=",
+  "Source": "Fiap.API.Emailify",
+  "BasePath": "_content/Fiap.API.Emailify",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

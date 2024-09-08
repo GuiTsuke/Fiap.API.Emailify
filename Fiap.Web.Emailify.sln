@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.API.Emailify", "Fiap.Web.Emailify\Fiap.API.Emailify.csproj", "{054289B7-4113-4D8D-9F91-5CB2C1A79DD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.Emailify", "Fiap.Emailify\Fiap.Emailify.csproj", "{09200AB7-52A1-4A82-AACB-653D3B0393C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{054289B7-4113-4D8D-9F91-5CB2C1A79DD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{054289B7-4113-4D8D-9F91-5CB2C1A79DD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{054289B7-4113-4D8D-9F91-5CB2C1A79DD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{054289B7-4113-4D8D-9F91-5CB2C1A79DD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09200AB7-52A1-4A82-AACB-653D3B0393C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09200AB7-52A1-4A82-AACB-653D3B0393C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09200AB7-52A1-4A82-AACB-653D3B0393C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09200AB7-52A1-4A82-AACB-653D3B0393C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4CAD4121-E89C-40A9-BC4F-A535EE154C5A}
+	EndGlobalSection
+EndGlobal

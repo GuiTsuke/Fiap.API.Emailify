@@ -1,0 +1,14 @@
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\bin\Debug\net8.0\Fiap.Emailify.deps.json
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\bin\Debug\net8.0\Fiap.Emailify.runtimeconfig.json
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\bin\Debug\net8.0\Fiap.Emailify.dll
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\bin\Debug\net8.0\Fiap.Emailify.pdb
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\obj\Debug\net8.0\Fiap.Emailify.csproj.AssemblyReference.cache
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\obj\Debug\net8.0\Fiap.Emailify.GeneratedMSBuildEditorConfig.editorconfig
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\obj\Debug\net8.0\Fiap.Emailify.AssemblyInfoInputs.cache
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\obj\Debug\net8.0\Fiap.Emailify.AssemblyInfo.cs
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\obj\Debug\net8.0\Fiap.Emailify.csproj.CoreCompileInputs.cache
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\obj\Debug\net8.0\Fiap.Emailify.dll
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\obj\Debug\net8.0\refint\Fiap.Emailify.dll
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\obj\Debug\net8.0\Fiap.Emailify.pdb
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\obj\Debug\net8.0\Fiap.Emailify.genruntimeconfig.cache
+C:\src\Fiap.Web.Emailify\Fiap.Emailify\obj\Debug\net8.0\ref\Fiap.Emailify.dll
