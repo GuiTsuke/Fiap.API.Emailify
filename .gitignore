@@ -1,0 +1,7 @@
+# Arquivos e pastas do Visual Studio
+.vs/
+*.user
+*.suo
+*.dbmdl
+*.jfm
+*.pdb
