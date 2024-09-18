@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace Fiap.API.Emailify.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240908211625_CreateEmailAndCalendarTables")]
-    partial class CreateEmailAndCalendarTables
+    [Migration("20240918015414_AjusteTables1")]
+    partial class AjusteTables1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,24 +34,30 @@ namespace Fiap.API.Emailify.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TIMESTAMP(7)")
-                        .HasColumnName("DS_DATE");
-
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)")
+                        .HasMaxLength(500)
+                        .HasColumnType("NVARCHAR2(500)")
                         .HasColumnName("DS_DESCRIPTION");
 
-                    b.Property<string>("EventId")
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("DT_END_DATE");
+
+                    b.Property<string>("Location")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)")
-                        .HasColumnName("GUID_EVENT");
+                        .HasMaxLength(200)
+                        .HasColumnType("NVARCHAR2(200)")
+                        .HasColumnName("DS_LOCATION");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("DT_START_DATE");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)")
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR2(100)")
                         .HasColumnName("DS_TITLE");
 
                     b.HasKey("Id");
@@ -73,30 +79,26 @@ namespace Fiap.API.Emailify.Migrations
                         .HasColumnType("NVARCHAR2(2000)")
                         .HasColumnName("DS_BODY");
 
-                    b.Property<string>("EmailId")
+                    b.Property<string>("Recipients")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)")
-                        .HasColumnName("GUID_EMAIL");
+                        .HasColumnType("CLOB")
+                        .HasColumnName("DS_TO");
 
-                    b.Property<string>("From")
+                    b.Property<string>("Sender")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)")
+                        .HasMaxLength(256)
+                        .HasColumnType("NVARCHAR2(256)")
                         .HasColumnName("DS_FROM");
 
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)")
-                        .HasColumnName("DS_SUBJECT");
-
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTime>("SentDate")
                         .HasColumnType("TIMESTAMP(7)")
                         .HasColumnName("DT_DATE");
 
-                    b.Property<string>("To")
+                    b.Property<string>("Subject")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)")
-                        .HasColumnName("DS_TO");
+                        .HasMaxLength(512)
+                        .HasColumnType("NVARCHAR2(512)")
+                        .HasColumnName("DS_SUBJECT");
 
                     b.HasKey("Id");
 
@@ -105,48 +107,53 @@ namespace Fiap.API.Emailify.Migrations
 
             modelBuilder.Entity("Fiap.Emailify.Models.UserPreferences", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)")
-                        .HasColumnName("ID_USER");
+                        .HasColumnName("CD_USER");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Categories")
+                    b.Property<string>("CategoriesJson")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)")
-                        .HasColumnName("DS_CATEGORIES");
+                        .HasColumnName("DS_CATEGORIES_JSON");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(450)")
+                        .HasMaxLength(255)
+                        .HasColumnType("NVARCHAR2(255)")
                         .HasColumnName("DS_EMAIL");
 
-                    b.Property<string>("Labels")
+                    b.Property<int>("IsActive")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("FL_ACTIVE");
+
+                    b.Property<int>("IsDarkTheme")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("FL_DARK_THEME");
+
+                    b.Property<string>("LabelsJson")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)")
-                        .HasColumnName("DS_LABELS");
+                        .HasColumnName("DS_LABELS_JSON");
 
                     b.Property<string>("PrimaryColor")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)")
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
                         .HasColumnName("DS_PRIMARY_COLOR");
 
                     b.Property<string>("SecondaryColor")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)")
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
                         .HasColumnName("DS_SECONDARY_COLOR");
 
                     b.Property<string>("Theme")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("NVARCHAR2(100)")
                         .HasColumnName("DS_THEME");
 
-                    b.HasKey("UserId");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
+                    b.HasKey("Id");
 
                     b.ToTable("TBL_USER_PREFERENCES", (string)null);
                 });

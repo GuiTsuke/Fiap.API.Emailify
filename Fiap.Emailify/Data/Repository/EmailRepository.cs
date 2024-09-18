@@ -1,5 +1,7 @@
-﻿using Fiap.Emailify.Models;
+﻿using Fiap.Emailify.Data.Contexts;
+using Fiap.Emailify.Models;
 using Fiap.Emailify.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,60 +12,48 @@ namespace Fiap.Emailify.Data.Repository
 {
     public class EmailRepository : IEmailRepository
     {
-        private readonly List<Email> _emails = new List<Email>();
-        private readonly List<EmailLog> _emailLogs = new List<EmailLog>();
+        private readonly DatabaseContext _context;
 
-        public async Task<List<EmailViewModel>> GetAllEmailsAsync()
+        public EmailRepository(DatabaseContext context)
         {
-            return await Task.FromResult(_emails.Select(e => new EmailViewModel
-            {
-                EmailId = e.EmailId,
-                From = e.From,
-                To = e.To,
-                Subject = e.Subject,
-                Body = e.Body,
-                Timestamp = e.Timestamp
-            }).ToList());
+            _context = context;
         }
 
-        public async Task<EmailViewModel> GetEmailByIdAsync(string emailId)
+        public async Task<Email?> GetByIdAsync(int id)
         {
-            var email = _emails.FirstOrDefault(e => e.EmailId == emailId);
-            if (email == null)
+            return await _context.Emails.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Email>> GetAllAsync(string email)
+        {
+            var emails = await _context.Emails.ToListAsync();
+            return emails
+                .Where(e => e.Sender.Equals(email) || e.Recipients.Contains(email))
+                .ToList();
+        }
+
+        public async Task AddAsync(Email email)
+        {
+            await _context.Emails.AddAsync(email);
+            await SaveChangesAsync();
+        }        
+
+        public async Task DeleteAsync(int id)
+        {
+            var email = await GetByIdAsync(id);
+            if (email != null)
             {
-                return null;
+                _context.Emails.Remove(email);
+                await SaveChangesAsync();
             }
-
-            return await Task.FromResult(new EmailViewModel
-            {
-                EmailId = email.EmailId,
-                From = email.From,
-                To = email.To,
-                Subject = email.Subject,
-                Body = email.Body,
-                Timestamp = email.Timestamp
-            });
         }
 
-        public async Task SendEmailAsync(Email email)
+        public async Task SaveChangesAsync()
         {
-            _emails.Add(email);
-            _emailLogs.Add(new EmailLog
-            {
-                UserEmail = email.From,
-                SentAt = DateTime.UtcNow
-            });
-
-            await Task.CompletedTask;
-        }
-
-        public async Task<List<EmailLog>> GetEmailLogsByUserAsync(string userEmail, DateTime since)
-        {
-            return await Task.FromResult(
-                _emailLogs.Where(log => log.UserEmail == userEmail && log.SentAt >= since).ToList()
-            );
+            await _context.SaveChangesAsync();
         }
     }
+
 }
 
 

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "igTgSF5zD1Q=",
+  "dgSpecHash": "+xg3EooRnJg=",
   "success": true,
   "projectFilePath": "C:\\src\\Fiap.Web.Emailify\\Fiap.Emailify\\Fiap.Emailify.csproj",
   "expectedPackageFiles": [
@@ -28,6 +28,7 @@
     "C:\\Users\\guilh\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
     "C:\\Users\\guilh\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\guilh\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\guilh\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\guilh\\.nuget\\packages\\oracle.entityframeworkcore\\8.23.50\\oracle.entityframeworkcore.8.23.50.nupkg.sha512",
     "C:\\Users\\guilh\\.nuget\\packages\\oracle.manageddataaccess.core\\23.5.0\\oracle.manageddataaccess.core.23.5.0.nupkg.sha512",
     "C:\\Users\\guilh\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",

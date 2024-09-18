@@ -1,5 +1,7 @@
-﻿using Fiap.Emailify.Models;
+﻿using Fiap.Emailify.Data.Contexts;
+using Fiap.Emailify.Models;
 using Fiap.Emailify.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,26 +10,47 @@ using System.Threading.Tasks;
 
 namespace Fiap.Emailify.Data.Repository
 {
-    public class CalendarRepository : ICalendarRepository
+    public class CalendarEventRepository : ICalendarEventRepository
     {
-        private readonly List<CalendarEvent> _events = new List<CalendarEvent>();
+        private readonly DatabaseContext _context;
 
-        public async Task<List<CalendarEventViewModel>> GetAllEventsAsync()
+        public CalendarEventRepository(DatabaseContext context)
         {
-            return await Task.FromResult(_events.Select(e => new CalendarEventViewModel
+            _context = context;
+        }
+
+        public async Task<IEnumerable<CalendarEvent>> GetAllAsync()
+        {
+            return await _context.CalendarEvents.ToListAsync();
+        }
+
+        public async Task<CalendarEvent> GetByIdAsync(int id)
+        {
+            return await _context.CalendarEvents.FindAsync(id);
+        }
+
+        public async Task<int> AddAsync(CalendarEvent calendarEvent)
+        {
+            await _context.CalendarEvents.AddAsync(calendarEvent);
+            await _context.SaveChangesAsync();
+            return calendarEvent.Id;
+        }
+
+        public async Task UpdateAsync(CalendarEvent calendarEvent)
+        {
+            _context.CalendarEvents.Update(calendarEvent);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var calendarEvent = await _context.CalendarEvents.FindAsync(id);
+            if (calendarEvent != null)
             {
-                EventId = e.EventId,
-                Title = e.Title,
-                Date = e.Date,
-                Description = e.Description
-            }).ToList());
+                _context.CalendarEvents.Remove(calendarEvent);
+                await _context.SaveChangesAsync();
+            }
         }
-
-        public async Task CreateEventAsync(CalendarEvent calendarEvent)
-        {
-            _events.Add(calendarEvent);
-            await Task.CompletedTask;
-        }
-
     }
+
 }

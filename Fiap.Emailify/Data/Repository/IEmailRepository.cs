@@ -10,9 +10,11 @@ namespace Fiap.Emailify.Data.Repository
 {
     public interface IEmailRepository
     {
-        Task<List<EmailViewModel>> GetAllEmailsAsync();
-        Task<EmailViewModel> GetEmailByIdAsync(string emailId);
-        Task SendEmailAsync(Email email);
-        Task<List<EmailLog>> GetEmailLogsByUserAsync(string userId, DateTime since);
+        Task<Email?> GetByIdAsync(int id);
+        Task<IEnumerable<Email>> GetAllAsync(string email);
+        Task AddAsync(Email email);
+        Task DeleteAsync(int id);
+        Task SaveChangesAsync();
     }
+
 }

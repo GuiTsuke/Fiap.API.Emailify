@@ -1,7 +1,9 @@
+using Fiap.Emailify.Data;
 using Fiap.Emailify.Data.Contexts;
 using Fiap.Emailify.Data.Repository;
 using Fiap.Emailify.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +20,9 @@ builder.Services.AddScoped<IUserPreferencesService, UserPreferencesService>();
 builder.Services.AddScoped<IUserPreferencesRepository, UserPreferencesRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IEmailRepository, EmailRepository>();
-builder.Services.AddScoped<ICalendarService, CalendarService>();
-builder.Services.AddScoped<ICalendarRepository, CalendarRepository>();
+builder.Services.AddScoped<ISpamControlService, SpamControlService>();
+builder.Services.AddScoped<ICalendarEventService, CalendarEventService>();
+builder.Services.AddScoped<ICalendarEventRepository, CalendarEventRepository>();
 
 #endregion
 
@@ -29,7 +32,14 @@ builder.Services.AddScoped<ICalendarRepository, CalendarRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Fiap API Emailify",
+        Version = "v1"
+    });
+});
 
 var app = builder.Build();
 
@@ -45,5 +55,13 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Inicializar o banco de dados com dados padrão
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<DatabaseContext>();
+    DbInitializer.Initialize(context);
+}
 
 app.Run();

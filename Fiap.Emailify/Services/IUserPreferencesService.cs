@@ -10,9 +10,10 @@ namespace Fiap.Emailify.Services
 {
     public interface IUserPreferencesService
     {
-        Task<UserPreferences> CreateUserPreferencesAsync(UserPreferencesViewModel viewModel);
-        Task<UserPreferences> GetUserPreferencesByIdAsync(int id);
-        Task<UserPreferences> UpdateUserPreferencesAsync(int id, UserPreferencesViewModel viewModel);
-        Task MigrateUserPreferencesAsync(int userIdFrom, int userIdTo);
+        Task<UserPreferencesViewModel?> GetActiveUserPreferenceAsync(string email);
+        Task<List<UserPreferencesViewModel>?> GetUserPreferencesAsync(string email);
+        Task<bool> UpdateUserPreferencesAsync(UserPreferencesViewModel viewModel, string theme);
+        Task<bool> InitializeDefaultThemesAsync(string email);
+        Task<bool> SetActiveThemeAsync(string email, string themeName);
     }
 }

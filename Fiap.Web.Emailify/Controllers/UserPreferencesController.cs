@@ -12,8 +12,8 @@ using Fiap.Emailify.ViewModels;
 
 namespace Fiap.API.Emailify.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class UserPreferencesController : ControllerBase
     {
         private readonly IUserPreferencesService _userPreferencesService;
@@ -23,73 +23,105 @@ namespace Fiap.API.Emailify.Controllers
             _userPreferencesService = userPreferencesService;
         }
 
-        // POST: api/UserPreferences
-        [HttpPost]
-        public async Task<IActionResult> CreateUserPreferences([FromBody] UserPreferencesViewModel viewModel)
+        // Endpoint para alternar entre dois temas predefinidos
+        [HttpPost("set-active-theme")]
+        public async Task<IActionResult> SetActiveTheme([FromBody] SetActiveThemeRequest request)
         {
-            if (!ModelState.IsValid)
+            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Theme))
             {
-                return BadRequest(ModelState);
+                return BadRequest("Email and theme are required.");
             }
-
             try
             {
-                var result = await _userPreferencesService.CreateUserPreferencesAsync(viewModel);
-                return Ok(new { message = "Preferências cadastradas com sucesso!", result });
+                var result = await _userPreferencesService.SetActiveThemeAsync(request.Email, request.Theme);
+                if (!result)
+                {
+                    return NotFound("Theme not found or invalid request.");
+                }
             }
-            catch (InvalidOperationException ex)
+            catch(Exception ex)
             {
-                return Conflict(new { message = ex.Message });
-            }
+                return NotFound("Message: " + ex.Message);
+            }                       
+
+            return Ok("Theme has been set as active.");
         }
 
-        // GET: api/UserPreferences/{id}
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserPreferencesById(int id)
+        // Endpoint para personalizar um tema existente
+        [HttpPost("customize-theme")]
+        public async Task<IActionResult> CustomizeTheme([FromQuery] string theme, [FromBody] CustomizeThemeRequest request)
         {
-            var preferences = await _userPreferencesService.GetUserPreferencesByIdAsync(id);
+            if (string.IsNullOrEmpty(theme))
+                return BadRequest("Determine which theme you want to customize.");
+
+            if (string.IsNullOrEmpty(request.Email))
+                return BadRequest("Email is required.");
+
+            var result = await _userPreferencesService.UpdateUserPreferencesAsync(new UserPreferencesViewModel
+            {
+                Email = request.Email,
+                PrimaryColor = request.PrimaryColor,
+                SecondaryColor = request.SecondaryColor,
+                Labels = request.Labels,
+                Categories = request.Categories,
+                IsDarkTheme = request.IsDarkTheme
+
+            }, theme);
+
+            if (!result)
+            {
+                return NotFound("Preferences not found.");
+            }
+
+            return Ok("Theme customized successfully.");
+        }
+
+        // Endpoint para inicializar os temas padrão
+        [HttpPost("initialize-themes")]
+        public async Task<IActionResult> InitializeThemes([FromBody] InitializeThemesRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Email))
+            {
+                return BadRequest("Email is required.");
+            }
+
+            var result = await _userPreferencesService.InitializeDefaultThemesAsync(request.Email);
+            if (!result)
+            {
+                return Conflict("Themes already initialized for this user.");
+            }
+
+            return Ok("Default themes initialized.");
+        }
+
+        // Endpoint para obter as preferências do usuário
+        [HttpGet("get-preferences/{email}")]
+        public async Task<IActionResult> GetPreferences(string email)
+        {
+            var preferences = await _userPreferencesService.GetUserPreferencesAsync(email);
             if (preferences == null)
             {
-                return NotFound(new { message = "Preferências de usuário não encontradas." });
+                return NotFound("Preferences not found.");
             }
 
             return Ok(preferences);
         }
 
-        // PUT: api/UserPreferences/{id}
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUserPreferences(int id, [FromBody] UserPreferencesViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                var updatedPreferences = await _userPreferencesService.UpdateUserPreferencesAsync(id, viewModel);
-                return Ok(new { message = "Preferências atualizadas com sucesso!", updatedPreferences });
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
-        }
-
-        // POST: api/UserPreferences/migrate
-        [HttpPost("migrate")]
-        public async Task<IActionResult> MigrateUserPreferences(int userIdFrom, int userIdTo)
+        [HttpGet("get-active-preferences/{email}")]
+        public async Task<IActionResult> GetActivePreferences(string email)
         {
             try
             {
-                await _userPreferencesService.MigrateUserPreferencesAsync(userIdFrom, userIdTo);
-                return Ok(new { message = "Preferências migradas com sucesso!" });
+                var preferences = await _userPreferencesService.GetActiveUserPreferenceAsync(email);
+                return Ok(preferences);
             }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { message = ex.Message });
+            catch (Exception ex)
+            {                
+                return NotFound("Preferences not found. Message: " + ex.Message);
             }
+
         }
     }
+
 
 }

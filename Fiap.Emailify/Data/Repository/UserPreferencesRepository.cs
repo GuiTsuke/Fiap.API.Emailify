@@ -18,30 +18,34 @@ namespace Fiap.Emailify.Data.Repository
             _context = context;
         }
 
-        public async Task<UserPreferences> AddAsync(UserPreferences userPreferences)
+        public async Task<UserPreferences?> GetActiveThemeByEmailAsync(string email)
+        {
+            return await _context.UserPreferences.FirstAsync(up => up.Email == email && up.IsActive);
+        }
+
+        public async Task<List<UserPreferences>> GetByEmailAsync(string email)
+        {
+            return await _context.UserPreferences.AsQueryable().Where(up => up.Email == email).ToListAsync();
+        }               
+
+        public async Task AddAsync(UserPreferences userPreferences)
         {
             await _context.UserPreferences.AddAsync(userPreferences);
-            return userPreferences;
         }
-
-        public async Task<UserPreferences> GetByIdAsync(int id)
-        {
-            return await _context.UserPreferences.FindAsync(id);
-        }
-
-        public async Task<UserPreferences> GetByEmailAsync(string email)
-        {
-            return await _context.UserPreferences.FirstOrDefaultAsync(up => up.Email == email);
-        }
-
         public async Task UpdateAsync(UserPreferences userPreferences)
         {
             await Task.FromResult(_context.UserPreferences.Update(userPreferences));
         }
 
-        public async Task SaveChangesAsync()
+        public async Task<bool> SaveChangesAsync()
         {
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<UserPreferences?> GetByThemeAsync(string themeName, string email)
+        {
+            return await _context.UserPreferences
+                                 .FirstOrDefaultAsync(up => up.Theme == themeName && up.Email == email);
         }
     }
 

@@ -1632,6 +1632,7 @@
       "Fiap.Emailify/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "8.0.8",
+          "Newtonsoft.Json": "13.0.3",
           "Oracle.EntityFrameworkCore": "8.23.50"
         },
         "runtime": {

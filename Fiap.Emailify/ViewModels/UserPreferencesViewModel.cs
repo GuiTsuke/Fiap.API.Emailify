@@ -9,18 +9,17 @@ namespace Fiap.Emailify.ViewModels
 {
     public class UserPreferencesViewModel
     {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
-        [Required]
-        public string Theme { get; set; }
+        public string? Theme { get; set; }
 
-        [Required]
-        public string PrimaryColor { get; set; }
+        public string? PrimaryColor { get; set; }
 
-        [Required]
-        public string SecondaryColor { get; set; }
+        public string? SecondaryColor { get; set; }
+        public List<string>? Labels { get; set; }
+        public List<string>? Categories { get; set; }
+        public bool IsDarkTheme { get; set; }
+        public bool IsActive { get; set; }
     }
 
 }

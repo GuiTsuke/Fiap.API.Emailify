@@ -10,11 +10,12 @@ namespace Fiap.Emailify.Data.Repository
 {
     public interface IUserPreferencesRepository
     {
-        Task<UserPreferences> AddAsync(UserPreferences userPreferences);
-        Task<UserPreferences> GetByIdAsync(int id);
-        Task<UserPreferences> GetByEmailAsync(string email);
-        Task SaveChangesAsync();
+        Task<UserPreferences?> GetActiveThemeByEmailAsync(string email);
+        Task<List<UserPreferences>> GetByEmailAsync(string email);
+        Task AddAsync(UserPreferences userPreferences);
         Task UpdateAsync(UserPreferences userPreferences);
+        Task<bool> SaveChangesAsync();
+        Task<UserPreferences?> GetByThemeAsync(string themeName, string email);
     }
 
 }

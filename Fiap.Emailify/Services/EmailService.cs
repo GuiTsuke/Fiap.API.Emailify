@@ -11,48 +11,67 @@ namespace Fiap.Emailify.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly IEmailRepository _repository;
-        private readonly int _emailLimit = 10;
-        private readonly TimeSpan _timeSpanLimit = TimeSpan.FromHours(1);
+        private readonly IEmailRepository _emailRepository;
+        private readonly ISpamControlService _spamControlService;
 
-        public EmailService(IEmailRepository repository)
+        public EmailService(IEmailRepository emailRepository, ISpamControlService spamControlService)
         {
-            _repository = repository;
+            _emailRepository = emailRepository;
+            _spamControlService = spamControlService;
         }
 
-        public async Task<List<EmailViewModel>> GetAllEmailsAsync()
+        public async Task<IEnumerable<EmailListViewModel>> GetAllEmailsAsync(string email)
         {
-            return await _repository.GetAllEmailsAsync();
-        }
-
-        public async Task<EmailViewModel> GetEmailByIdAsync(string emailId)
-        {
-            return await _repository.GetEmailByIdAsync(emailId);
-        }
-
-        public async Task<(bool blocked, string message)> SendEmailAsync(EmailViewModel emailViewModel)
-        {
-            // Verificar frequência de envio
-            var logs = await _repository.GetEmailLogsByUserAsync(emailViewModel.From, DateTime.UtcNow - _timeSpanLimit);
-            if (logs.Count >= _emailLimit)
+            var emails = await _emailRepository.GetAllAsync(email);
+            return emails.Select(e => new EmailListViewModel
             {
-                return (true, "Você atingiu o limite de envio de e-mails por hora.");
+                Id = e.Id,
+                Sender = e.Sender,
+                Recipients = e.Recipients,
+                Subject = e.Subject,
+                SentDate = e.SentDate,
+                IsSent = e.Sender == email
+            });
+        }
+
+        public async Task<EmailDetailViewModel> GetEmailByIdAsync(string emailUser, int idEmail)
+        {
+            var email = await _emailRepository.GetByIdAsync(idEmail);
+            if (email == null || (email.Sender != emailUser && !email.Recipients.Contains(emailUser)))
+            {
+                throw new KeyNotFoundException("E-mail não encontrado!");
+            }
+            return new EmailDetailViewModel
+            {
+                Id = email.Id,
+                Sender = email.Sender,
+                Recipients = email.Recipients,
+                Subject = email.Subject,
+                Body = email.Body,
+                SentDate = email.SentDate,
+                IsSent = email.Sender == emailUser
+            };
+        }
+
+        public async Task SendEmailAsync(string emailSender, EmailSendViewModel emailViewModel)
+        {
+            // Verifica controle de spam
+            if (await _spamControlService.IsSpam(emailSender))
+            {
+                throw new InvalidOperationException("Envio de e-mail com restrições por suspeita de spam");
             }
 
-            // Enviar e-mail
             var email = new Email
             {
-                EmailId = Guid.NewGuid().ToString(),
-                From = emailViewModel.From,
-                To = emailViewModel.To,
+                Sender = emailSender,
+                Recipients = emailViewModel.Recipients,
                 Subject = emailViewModel.Subject,
                 Body = emailViewModel.Body,
-                Timestamp = DateTime.UtcNow
+                SentDate = DateTime.UtcNow
             };
 
-            await _repository.SendEmailAsync(email);
-
-            return (false, "E-mail enviado com sucesso.");
+            await _emailRepository.AddAsync(email);
         }
     }
+
 }

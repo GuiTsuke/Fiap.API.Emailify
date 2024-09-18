@@ -9,31 +9,46 @@ using System.Threading.Tasks;
 
 namespace Fiap.Emailify.Services
 {
-    public class CalendarService : ICalendarService
+    public class CalendarEventService : ICalendarEventService
     {
-        private readonly ICalendarRepository _repository;
+        private readonly ICalendarEventRepository _calendarEventRepository;
 
-        public CalendarService(ICalendarRepository repository)
+        public CalendarEventService(ICalendarEventRepository calendarEventRepository)
         {
-            _repository = repository;
+            _calendarEventRepository = calendarEventRepository;
         }
 
-        public async Task<List<CalendarEventViewModel>> GetAllEventsAsync()
+        public async Task<IEnumerable<CalendarEvent>> GetAllEventsAsync()
         {
-            return await _repository.GetAllEventsAsync();
+            return await _calendarEventRepository.GetAllAsync();
         }
 
-        public async Task CreateEventAsync(CalendarEventViewModel eventViewModel)
+        public async Task<CalendarEvent> GetEventByIdAsync(int id)
         {
-            var calendarEvent = new CalendarEvent
-            {
-                EventId = Guid.NewGuid().ToString(),
-                Title = eventViewModel.Title,
-                Date = eventViewModel.Date,
-                Description = eventViewModel.Description
-            };
+            return await _calendarEventRepository.GetByIdAsync(id);
+        }
 
-            await _repository.CreateEventAsync(calendarEvent);
+        public async Task<int> CreateEventAsync(CalendarNewEventViewModel calendarEvent)
+        {
+
+            return await _calendarEventRepository.AddAsync(new CalendarEvent() {
+                Title = calendarEvent.Title,
+                Description = calendarEvent.Description,
+                StartDate = calendarEvent.StartDate,
+                EndDate = calendarEvent.EndDate,
+                Location = calendarEvent.Location
+            });
+        }
+
+        public async Task UpdateEventAsync(CalendarEvent calendarEvent)
+        {
+            await _calendarEventRepository.UpdateAsync(calendarEvent);
+        }
+
+        public async Task DeleteEventAsync(int id)
+        {
+            await _calendarEventRepository.DeleteAsync(id);
         }
     }
+
 }

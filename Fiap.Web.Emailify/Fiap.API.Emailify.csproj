@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Fiap.Emailify\Fiap.Emailify.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

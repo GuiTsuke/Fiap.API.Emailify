@@ -216,6 +216,7 @@ C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\Fiap.API.Emailify.As
 C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\Fiap.API.Emailify.csproj.CoreCompileInputs.cache
 C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\Fiap.API.Emailify.MvcApplicationPartsAssemblyInfo.cs
 C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\Fiap.API.Emailify.MvcApplicationPartsAssemblyInfo.cache
+C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\Fiap.API.Emailify.sourcelink.json
 C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\staticwebassets.build.json
 C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\staticwebassets.development.json
 C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\staticwebassets\msbuild.Fiap.API.Emailify.Microsoft.AspNetCore.StaticWebAssets.props
@@ -230,4 +231,3 @@ C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\refint\Fiap.API.Emai
 C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\Fiap.API.Emailify.pdb
 C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\Fiap.API.Emailify.genruntimeconfig.cache
 C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\ref\Fiap.API.Emailify.dll
-C:\src\Fiap.Web.Emailify\Fiap.Web.Emailify\obj\Debug\net8.0\Fiap.API.Emailify.sourcelink.json

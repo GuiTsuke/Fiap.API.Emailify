@@ -9,9 +9,9 @@ namespace Fiap.Emailify.Services
 {
     public interface IEmailService
     {
-        Task<List<EmailViewModel>> GetAllEmailsAsync();
-        Task<EmailViewModel> GetEmailByIdAsync(string emailId);
-        Task<(bool blocked, string message)> SendEmailAsync(EmailViewModel emailViewModel);
+        Task<IEnumerable<EmailListViewModel>> GetAllEmailsAsync(string email);
+        Task<EmailDetailViewModel> GetEmailByIdAsync(string emailUser, int idEmail);
+        Task SendEmailAsync(string email, EmailSendViewModel emailViewModel);
 
     }
 }

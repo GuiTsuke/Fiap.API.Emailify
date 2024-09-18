@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace Fiap.Emailify.Data.Repository
 {
-    public interface ICalendarRepository
+    public interface ICalendarEventRepository
     {
-        Task<List<CalendarEventViewModel>> GetAllEventsAsync();
-        Task CreateEventAsync(CalendarEvent calendarEvent);
+        Task<IEnumerable<CalendarEvent>> GetAllAsync();
+        Task<CalendarEvent> GetByIdAsync(int id);
+        Task<int> AddAsync(CalendarEvent calendarEvent);
+        Task UpdateAsync(CalendarEvent calendarEvent);
+        Task DeleteAsync(int id);
     }
+
 }
